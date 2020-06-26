@@ -15,38 +15,48 @@
    #+END_SRC
 
 ** Core
-*** Pimping this doc
-    SO's quote style, to use ~#+BEGIN_QUOTE ... #+END_QUOTE~
-    #+BEGIN_EXPORT html
-    <style>
-    blockquote {
-    margin-bottom: 10px;
-    padding: 10px;
-    background-color: #FFF8DC;
-    border-left: 2px solid #ffeb8e;
-    border-left-color: rgb(255, 228, 102);
-    display: block;
-    margin-block-start: 1em;
-    margin-block-end: 1em;
-    margin-inline-start: 40px;
-    margin-inline-end: 40px;
-    }
-    </style>
-    #+END_EXPORT
 *** Use-package
-    packages: ~[[https://github.com/jwiegley/use-package][use-package]]~
+    packages: [[https://github.com/jwiegley/use-package][use-package]]
 
     #+BEGIN_SRC emacs-lisp
     (setq use-package-always-ensure t)
     #+END_SRC
 
     #+BEGIN_QUOTE
-    use-package ~:ensure t~ will install any package missing on the system
+    ~:ensure t~ will install any package missing on the system
     #+END_QUOTE
+
+*** Org-mode
+    packages: [[https://orgmode.org/][org]] & [[https://orgmode.org/worg/org-contrib/babel/intro.html][babel]] test
+
+    #+BEGIN_SRC emacs-lisp
+    (use-package org)
+    (eval-after-load "org" '(require 'ox-gfm nil t)) ;; Improves 'grip-mode' rendering
+    (use-package babel)
+    #+END_SRC
+
+    | Effect               | Binding   |
+    |----------------------+-----------|
+    | opens an link        | ~C-c C-o~ |
+    |----------------------+-----------|
+    | restructures a table | ~C-c C-c~ |
+    |----------------------+-----------|
+
+*** Markdown
+    packages: [[https://www.emacswiki.org/emacs/MarkdownMode][markdown-mode]] & [[https://github.com/seagle0128/grip-mode][grip-mode]]
+
+    #+BEGIN_SRC emacs-lisp
+    (use-package markdown-mode)
+    (use-package grip-mode
+    :init (setq grip-github-user "username")
+          (setq grip-github-password "token-or-passwd")
+          (add-hook 'markdown-mode-hook #'grip-mode)
+          (add-hook 'org-mode-hook #'grip-mode))
+    #+END_SRC
 
 ** Visual
 *** Theme
-    packages: ~[[https://github.com/oneKelvinSmith/monokai-emacs][monokai-theme]]~
+    packages: [[https://github.com/oneKelvinSmith/monokai-emacs][monokai-theme]]
 
     #+BEGIN_SRC emacs-lisp
     (use-package monokai-theme)
@@ -99,7 +109,7 @@
    #+END_SRC
 
 *** Column limits
-    packages: ~[[https://www.emacswiki.org/emacs/FillColumnIndicator][fill-column-indicator]]~ ~[[https://www.emacswiki.org/emacs/ColumnMarker][column-marker]]~
+    packages: [[https://www.emacswiki.org/emacs/FillColumnIndicator][fill-column-indicator]] [[https://www.emacswiki.org/emacs/ColumnMarker][column-marker]]
 
     #+BEGIN_SRC emacs-lisp
     (use-package fill-column-indicator
@@ -112,7 +122,7 @@
     #+END_SRC
 
 *** Paranthesis
-    packages: ~[[https://www.emacswiki.org/emacs/RainbowDelimiters][rainbow-delimiters]]~
+    packages: [[https://www.emacswiki.org/emacs/RainbowDelimiters][rainbow-delimiters]]
 
     #+BEGIN_SRC emacs-lisp
     (add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
@@ -123,12 +133,12 @@
 *** Whitespaces
 
     #+BEGIN_SRC emacs-lisp
-    (setq whitespace-style '(face empty tabs trailing))
+    (setq whitespace-style '(face tabs trailing))
     (global-whitespace-mode t)
     #+END_SRC
 
 *** Checkers
-    packages: ~[[https://www.flycheck.org/en/latest/][flycheck]]~ ~[[https://www.emacswiki.org/emacs/FlySpell][flyspell]]~
+    packages: [[https://www.flycheck.org/en/latest/][flycheck]] [[https://www.emacswiki.org/emacs/FlySpell][flyspell]]
 
     #+BEGIN_SRC emacs-lisp
     (use-package flycheck
@@ -145,7 +155,7 @@
 
 ** Languages
 *** C/C++
-    packages: ~cmake-mode~ & ~[[https://github.com/emacsorphanage/cpp-auto-include][cpp-auto-include]]~
+    packages: ~cmake-mode~ & [[https://github.com/emacsorphanage/cpp-auto-include][cpp-auto-include]]
 
     #+BEGIN_SRC emacs-lisp
     (use-package cmake-mode)
@@ -153,92 +163,81 @@
     #+END_SRC
 
 *** Go
-    packages: ~[[https://github.com/dominikh/go-mode.el][go-mode]]~ ~[[https://github.com/golang/lint][golint]]~ ~[[https://github.com/emacsorphanage/go-eldoc][go-eldoc]]~
+    packages: [[https://github.com/dominikh/go-mode.el][go-mode]] [[https://github.com/golang/lint][golint]] [[https://github.com/emacsorphanage/go-eldoc][go-eldoc]]
 
    #+BEGIN_SRC emacs-lisp
    (use-package go-mode
    :config (add-to-list 'exec-path "/usr/local/go/bin/go")
            (add-hook 'before-save-hook 'gofmt-before-save))
-   (use-package go-lint :hook go-mode)
+   (use-package golint :hook go-mode)
    (use-package go-eldoc :hook go-mode)
    #+END_SRC
 
 *** Haskell
-    packages: ~[[https://github.com/haskell/haskell-mode][haskell-mode]]~
+    packages: [[https://github.com/haskell/haskell-mode][haskell-mode]]
 
     #+BEGIN_SRC emacs-lisp
     (use-package haskell-mode)
     #+END_SRC
 
 *** Python
-    packages: ~[[https://www.emacswiki.org/emacs/PythonProgrammingInEmacs][python-mode]]~
+    packages: [[https://www.emacswiki.org/emacs/PythonProgrammingInEmacs][python-mode]]
 
     #+BEGIN_SRC emacs-lisp
     (use-package python-mode)
     (setf python-shell-interpreter "python3")
     #+END_SRC
 
-*** GraphQL
-    packages: ~[[https://github.com/davazp/graphql-mode][graphql-mode]]~
+*** Docker
+    packages: [[https://github.com/spotify/dockerfile-mode][dockerfile-mode]]
 
     #+BEGIN_SRC emacs-lisp
-    (use-package graphql-mode)
+    (use-package dockerfile-mode)
     #+END_SRC
 
+    | Effect                   | Binding   |
+    |--------------------------+-----------|
+    | Asks a name & builds img | ~C-c C-b~ |
+    |--------------------------+-----------|
+
 *** JavaScript
-    packages: ~[[https://github.com/tamzinblake/js3-mode][js3-mode]]~
+    packages: [[https://github.com/tamzinblake/js3-mode][js3-mode]]
 
     #+BEGIN_SRC emacs-lisp
     (use-package js3-mode)
     #+END_SRC
 
+*** GraphQL
+    packages: [[https://github.com/davazp/graphql-mode][graphql-mode]]
+
+    #+BEGIN_SRC emacs-lisp
+    (use-package graphql-mode)
+    #+END_SRC
+
 *** JSON
-    packages: ~[[https://www.emacswiki.org/emacs/JSON][json-mode]]~
+    packages: [[https://www.emacswiki.org/emacs/JSON][json-mode]]
 
     #+BEGIN_SRC emacs-lisp
     (use-package json-mode)
     #+END_SRC
 
 *** TOML
-    packages: ~[[https://github.com/dryman/toml-mode.el][toml-mode]]~
+    packages: [[https://github.com/dryman/toml-mode.el][toml-mode]]
 
     #+BEGIN_SRC emacs-lisp
     (use-package toml-mode)
     #+END_SRC
 
 *** YAML
-    packages: ~[[https://www.emacswiki.org/emacs/YamlMode][yaml-mode]]~
+    packages: [[https://www.emacswiki.org/emacs/YamlMode][yaml-mode]]
 
     #+BEGIN_SRC emacs-lisp
     (use-package yaml-mode)
     #+END_SRC
 
-** Writing
-*** Org Mode
-    packages: ~[[https://orgmode.org/][org]]~ & ~[[https://orgmode.org/worg/org-contrib/babel/intro.html][babel]]~
-
-    #+BEGIN_SRC emacs-lisp
-    (use-package org)
-    (use-package babel)
-    #+END_SRC
-
-*** Markdown
-    packages: ~[[https://www.emacswiki.org/emacs/MarkdownMode][markdown-mode]]~ & ~[[https://github.com/seagle0128/grip-mode][grip-mode]]~
-
-    #+BEGIN_SRC emacs-lisp
-    (use-package markdown-mode)
-    (use-package grip-mode
-    :ensure t
-    :init (setq grip-binary-path "/home/quentin/.local/bin/grip")
-          (setq grip-github-user "username")
-          (setq grip-github-password "token-or-passwd")
-          (setq grip-update-after-change nil)
-          (setq grip-preview-use-webkit t)
-    :hook (markdown-mode))
-    #+END_SRC
-
 * Random
 ** Making emacs safer
+
     #+BEGIN_SRC emacs-lisp
     (setq tls-checktrust t)
     (let ((trustfile
@@ -256,6 +255,7 @@
     #+END_SRC
 
 ** Functions
+
    #+BEGIN_SRC emacs-lisp
    (defun puff-dunno ()
        "Insert an ASCII dunno at cursor."
@@ -264,22 +264,19 @@
        )
 
    #+END_SRC
-* In considerations
-   - [[http://web-mode.org/][web-mode]]
-   - [[https://github.com/ndmitchell/hlint#emacs-integration][hlint]]
-   - [[https://github.com/Alexander-Miller/treemacs][treemacs]]
+
+* In consideration
+    - [[http://web-mode.org/][web-mode]]
+    - [[https://github.com/ndmitchell/hlint#emacs-integration][hlint]]
+    - [[https://github.com/Silex/docker.el][docker.el]]
+    - [[https://github.com/Alexander-Miller/treemacs][treemacs]]
 
 * Documentation
-** Reminders
-*** Interesting bindings
-    - org-mode: ~C-c C-o~ opens a url
-
 ** Sources
    - [[https://orgmode.org][org-mode]]
      - [[https://orgmode.org/worg/org-faq.html][FAQ]]
      - [[https://orgmode.org/org.pdf][Man]] (PDF)
      - [[https://orgmode.org/orgguide.pdf][Guide]] (Compact PDF)
-     - [[http://ergoemacs.org/emacs/emacs_org_markup.html][CheatSheet]]
    - [[https://github.com/jwiegley/use-package][use-package]]
    - [[https://melpa.org][Melpa]]
    - [[https://github.com/DiegoVicen/my-emacs#making-emacs-secure][Making Emacs safer]]
@@ -287,3 +284,4 @@
 ** Inspirations
    - [[https://github.com/DiegoVicen/my-emacs][Diego Vicen's emacs]]
    - [[https://github.com/himmAllRight/dotfiles/tree/master/emacs][himmAllRight's emacs]]
+     
