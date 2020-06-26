@@ -106,6 +106,9 @@
    (setq c-default-style "linux")
    (defvaralias 'c-basic-offset 'tab-width)
    (add-hook 'prog-mode-hook (lambda () (set-local-key (kbd "RET") 'newline-and-indent)))
+   (custom-set-variables
+   '(indent-line-function 'insert-tab))
+   (add-hook 'text-mode-hook (lambda() (setq indent-line-function 'insert-tab)))
    #+END_SRC
 
 *** Column limits
@@ -260,10 +263,22 @@
    (defun puff-dunno ()
        "Insert an ASCII dunno at cursor."
        (interactive)
-       (insert (format "¯\\_(ツ)_/¯"))
-       )
+       (insert (format "¯\\_(ツ)_/¯")))
 
+    (defun dv-puff-clean-buffer ()
+      "Cleans the buffer by re-indenting, removing tabs and trailing whitespace."
+        (interactive)
+        (delete-trailing-whitespace)
+        (save-excursion
+            (replace-regexp "^\n\\{3,\\}" "\n\n" nil (point-min) (point-max)))
+        (untabify (point-min) (point-max)))
+    (global-set-key (kbd "C-c x") 'dv-puff-clean-buffer)
    #+END_SRC
+
+    | Effect                | Binding |
+    |-----------------------+---------|
+    | Cleans up curr buffer | ~C-c x~ |
+    |-----------------------+---------|
 
 * In consideration
     - [[http://web-mode.org/][web-mode]]
@@ -284,4 +299,4 @@
 ** Inspirations
    - [[https://github.com/DiegoVicen/my-emacs][Diego Vicen's emacs]]
    - [[https://github.com/himmAllRight/dotfiles/tree/master/emacs][himmAllRight's emacs]]
-     
+
