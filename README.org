@@ -1,0 +1,9 @@
+#+TITLE: Dotfiles
+#+AUTHOR: Quentin Veyrenc
+#+REPO: https://github.com/VrncQuentin/dotfiles
+
+* Dotfiles
+This is my dotfiles repository. For now it is fairly light but it will grow with time.
+
+* In consideration
+* Documentation
