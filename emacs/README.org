@@ -105,10 +105,8 @@
    (setq-default tab-stop-list nil)
    (setq c-default-style "linux")
    (defvaralias 'c-basic-offset 'tab-width)
-   (add-hook 'prog-mode-hook (lambda () (set-local-key (kbd "RET") 'newline-and-indent)))
-   (custom-set-variables
-   '(indent-line-function 'insert-tab))
-   (add-hook 'text-mode-hook (lambda() (setq indent-line-function 'insert-tab)))
+   (add-hook 'prog-mode-hook (lambda () (define-key prog-mode-map (kbd "RET") 'newline-and-indent)))
+   (add-hook 'text-mode-hook (lambda () (setq indent-line-function 'insert-tab)))
    #+END_SRC
 
 *** Column limits
@@ -144,16 +142,16 @@
     packages: [[https://www.flycheck.org/en/latest/][flycheck]] [[https://www.emacswiki.org/emacs/FlySpell][flyspell]]
 
     #+BEGIN_SRC emacs-lisp
-    (use-package flycheck
-    :config (add-hook 'prog-mode-hook #'flycheck-mode)
-            (set-face-underline 'flycheck-error '(:color "#dc322f" :style line))
-            (set-face-underline 'flycheck-warning '(:color "#e5aa00" :style line))
-            (set-face-underline 'flycheck-info '(:color "#268bd2" :style line)))
+;;    (use-package flycheck
+;;    :config (add-hook 'prog-mode-hook #'flycheck-mode)
+;;            (set-face-underline 'flycheck-error '(:color "#dc322f" :style line))
+;;            (set-face-underline 'flycheck-warning '(:color "#e5aa00" :style line))
+;;            (set-face-underline 'flycheck-info '(:color "#268bd2" :style line)))
 
-    (use-package flyspell
-    :config (add-hook 'prog-mode-hook (lambda() (flyspell-mode 1)))
-            (add-hook 'prog-mode-hook (lambda() (flyspell-mode 1)))
-    )
+;;    (use-package flyspell
+;;    :config (add-hook 'prog-mode-hook (lambda() (flyspell-mode 1)))
+;;            (add-hook 'prog-mode-hook (lambda() (flyspell-mode 1)))
+;;    )
     #+END_SRC
 
 ** Languages
@@ -285,6 +283,7 @@
     - [[https://github.com/ndmitchell/hlint#emacs-integration][hlint]]
     - [[https://github.com/Silex/docker.el][docker.el]]
     - [[https://github.com/Alexander-Miller/treemacs][treemacs]]
+    - [[https://github.com/emacs-typescript/typescript.el][typescript-mode]]
 
 * Documentation
 ** Sources
